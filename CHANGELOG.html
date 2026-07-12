@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Changelog — SkuAuctionHouseReplacement</title>
+<style>
+:root{
+  --bg:#f7f4ee;--fg:#272013;--muted:#6f6552;--border:#e3dccc;
+  --accent:#b06a1c;--accent2:#8a5214;--code-bg:#efe8da;--code-fg:#8a4a00;
+  --quote-bg:#fbf2df;--quote-br:#d9a441;--card:#fffdf8;
+}
+@media (prefers-color-scheme:dark){
+:root{
+  --bg:#191712;--fg:#e9e2d3;--muted:#a99f8b;--border:#38322a;
+  --accent:#e0954a;--accent2:#f1bd7e;--code-bg:#2a2620;--code-fg:#f1bd7e;
+  --quote-bg:#241f16;--quote-br:#8a6a2a;--card:#221e17;
+}
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+  line-height:1.65;font-size:16px}
+.wrap{max-width:840px;margin:0 auto;padding:2rem 1.25rem 4rem}
+header{border-bottom:2px solid var(--border);padding-bottom:1rem;margin-bottom:1.5rem}
+h1{font-size:1.9rem;margin:.2rem 0;color:var(--accent2)}
+.sub{color:var(--muted);margin:.2rem 0 1rem}
+.langnav{position:sticky;top:0;z-index:5;display:flex;gap:.4rem;flex-wrap:wrap;
+  background:var(--bg);padding:.6rem 0;margin:0 0 1rem}
+.langnav button{cursor:pointer;border:1px solid var(--border);background:var(--card);
+  color:var(--fg);font:inherit;font-size:.92rem;padding:.4rem .9rem;border-radius:999px}
+.langnav button.active{background:var(--accent);border-color:var(--accent);color:#fff}
+section.lang{animation:fade .2s ease}
+@keyframes fade{from{opacity:.3}to{opacity:1}}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);
+  border-bottom:1px solid var(--border);padding-bottom:.3rem;margin:2rem 0 1rem}
+h3{font-size:1.25rem;margin:1.6rem 0 .3rem;color:var(--accent2);
+  border-left:4px solid var(--accent);padding-left:.6rem}
+h4{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);
+  margin:1rem 0 .3rem}
+ul{margin:.3rem 0 .8rem;padding-left:1.3rem}
+li{margin:.35rem 0}
+code{background:var(--code-bg);color:var(--code-fg);padding:.1rem .35rem;
+  border-radius:4px;font-family:"Cascadia Code",Consolas,Menlo,monospace;font-size:.87em}
+strong{color:var(--fg)}
+footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--border);
+  color:var(--muted);font-size:.85rem}
+a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Changelog — SkuAuctionHouseReplacement</h1>
+  <p class="sub">Traduction, optimisation et enrichissement de l'hôtel des ventes pour Sku (WoW TBC Classic — Anniversary).</p>
+  <nav class="langnav" aria-label="Langue">
+    <button data-lang="fr" class="active">Français</button>
+    <button data-lang="en">English</button>
+    <button data-lang="de">Deutsch</button>
+  </nav>
+</header>
+
+<main>
+<!-- ============================ FRANÇAIS ============================ -->
+<section class="lang" data-lang="fr">
+  <h2>Français</h2>
+
+  <h3>[2.3.1] — 2026-07-12</h3>
+  <h4>Corrigé</h4>
+  <ul>
+    <li><strong>Sélectionner un objet traduit dans « enchères par objet » renvoyait 0 résultat.</strong> L'action native de Sku interroge le serveur avec le nom capturé à la construction de la liste — le nom anglais — en correspondance exacte, ce qui ne trouve rien sur un royaume français (ex. « Runecloth Bag » au lieu de « Sac en étoffe runique »). <code>AuctionHouseStartQuery</code> est désormais intercepté : si le texte de recherche est un nom anglais connu de ces listes, il est remplacé par le nom français chargé avant l'envoi de la requête. La recherche libre, l'achat stratégique et les scans complets ne sont jamais touchés. Clients français uniquement.</li>
+  </ul>
+
+  <h3>[2.3.0] — 2026-07-11</h3>
+  <h4>Corrigé</h4>
+  <ul>
+    <li><strong>Le menu ne se rafraîchissait pas après une mise en vente.</strong> Après la mise en vente, la liste des sacs sous « Nouvelle enchère » et la liste « Ventes » restaient figées jusqu'à la fermeture/réouverture de l'hôtel des ventes. L'action de mise en vente reproduit désormais le flux natif de Sku (<code>GetOwnerAuctionItems</code> + retour + <code>CheckFrames</code>), de sorte que les deux se rafraîchissent sur place.</li>
+    <li><strong>Noms d'objets en anglais dans « enchères par objet ».</strong> Sous une catégorie (ex. Conteneur/Conteneur), les objets pas encore en cache client affichaient leur nom anglais. Un nouveau module <code>ItemNames.lua</code> écoute <code>GET_ITEM_INFO_RECEIVED</code> et re-libelle ces entrées avec le nom localisé, en place, au fur et à mesure du chargement, sans reconstruire la liste (le curseur ne bouge jamais). Clients français uniquement.</li>
+  </ul>
+
+  <h3>[2.2.0] — 2026-07-11</h3>
+  <h4>Ajouté</h4>
+  <ul>
+    <li><strong>Localisation allemande.</strong> Ajout de <code>Locales/deDE.lua</code> ; l'addon est désormais entièrement localisé en anglais, allemand et français, avec un repli par clé sur l'anglais. (Sku fournit ses chaînes allemandes nativement, la locale allemande ne contient donc que les chaînes d'interface propres à l'addon.)</li>
+  </ul>
+
+  <h3>[2.1.0] — 2026-07-11</h3>
+  <h4>Corrigé</h4>
+  <ul>
+    <li><strong>Compatibilité avec Sku 42.</strong> Toutes les fonctions <code>Auction*</code> ont quitté l'objet <code>SkuCore</code> pour le nouveau sous-module <code>SkuCore.AuctionHouse</code> ; chaque hook et appel a été reciblé (avec repli automatique sur <code>SkuCore</code> pour Sku 41). Le filtre courant / l'horodatage du dernier scan complet passent maintenant par <code>SkuSettings:Sub("SkuCore", nil, "char")</code> au lieu de <code>SkuOptions.db.char</code> (supprimé). Le déséchappement des infobulles est passé de <code>SkuChat:Unescape</code> à <code>SkuUtil:Unescape</code> (avec repli).</li>
+  </ul>
+
+  <h3>[2.0.0]</h3>
+  <h4>Ajouté</h4>
+  <ul>
+    <li>Version initiale. Hôtel des ventes français pour Sku :
+      <ul>
+        <li><strong>Ordre de tri localisé</strong> pour la liste des enchères.</li>
+        <li><strong>Éditeur de prix libre Or/Argent/Cuivre</strong> lors de la mise en vente.</li>
+        <li><strong>Scan instantané des sacs</strong> pour « Nouvelle enchère » (liste les objets vendables de vos sacs).</li>
+        <li><strong>Achat stratégique</strong> avec saisie libre (nom d'objet fonctionnant avec les noms français, prix maximum Or/Argent/Cuivre, quantité).</li>
+        <li><strong>Scan complet rapide</strong> (400 lignes/frame) et une bascule optionnelle <strong>scan complet automatique à l'ouverture</strong>.</li>
+        <li><strong>Infobulles d'objet enrichies</strong> : lignes d'addons tiers (Pawn, DisenchantBuddy, BitesCookBook, KeepTheHerbs…), comparaison avec l'objet équipé, prix des ingrédients/d'artisanat couplés aux données d'enchères scannées par Sku, et matériaux de désenchantement.</li>
+        <li><strong>Nettoyage à la fermeture</strong> : garde l'hôtel des ventes et le menu Sku synchronisés à la fermeture et libère ensuite de façon fiable les touches Entrée/Échap.</li>
+      </ul>
+    </li>
+  </ul>
+</section>
+
+<!-- ============================ ENGLISH ============================ -->
+<section class="lang" data-lang="en" hidden>
+  <h2>English</h2>
+
+  <h3>[2.3.1] — 2026-07-12</h3>
+  <h4>Fixed</h4>
+  <ul>
+    <li><strong>Selecting a translated item in "auctions by item" returned 0 results.</strong> Sku's native entry action queries the server with the item name captured at list-build time — the English name — as an exact match, which matches nothing on a French realm. <code>AuctionHouseStartQuery</code> is now hooked: when the search text is a known English item name from these lists, it is replaced with the loaded French name before the query is sent. Free-text search, strategy buy and full scans are never touched. French clients only.</li>
+  </ul>
+
+  <h3>[2.3.0] — 2026-07-11</h3>
+  <h4>Fixed</h4>
+  <ul>
+    <li><strong>Menu not refreshing after posting an auction.</strong> After posting, the bag list under "New auction" and the "Sells" list stayed frozen until the auction house was closed and reopened. The post action now mirrors Sku's native flow (<code>GetOwnerAuctionItems</code> + back + <code>CheckFrames</code>) so both refresh in place.</li>
+    <li><strong>English item names in "auctions by item".</strong> Under a category (e.g. Container/Container), items the client had not cached yet showed their English name. A new <code>ItemNames.lua</code> module listens for <code>GET_ITEM_INFO_RECEIVED</code> and relabels those entries to the localized name in place as they load, without rebuilding the list (the cursor never moves). French clients only.</li>
+  </ul>
+
+  <h3>[2.2.0] — 2026-07-11</h3>
+  <h4>Added</h4>
+  <ul>
+    <li><strong>German localization.</strong> Added <code>Locales/deDE.lua</code>; the addon is now fully localized in English, German and French with a per-key fallback to English. (Sku ships its German strings natively, so the German locale only needs the addon's own UI strings.)</li>
+  </ul>
+
+  <h3>[2.1.0] — 2026-07-11</h3>
+  <h4>Fixed</h4>
+  <ul>
+    <li><strong>Sku 42 compatibility.</strong> All <code>Auction*</code> functions moved from the <code>SkuCore</code> god-object onto the new <code>SkuCore.AuctionHouse</code> submodule; every hook and call retargeted (with an automatic fallback to <code>SkuCore</code> for Sku 41). The current filter / last-full-scan timestamp now go through <code>SkuSettings:Sub("SkuCore", nil, "char")</code> instead of the removed <code>SkuOptions.db.char</code>. Tooltip unescaping moved from <code>SkuChat:Unescape</code> to <code>SkuUtil:Unescape</code> (with fallback).</li>
+  </ul>
+
+  <h3>[2.0.0]</h3>
+  <h4>Added</h4>
+  <ul>
+    <li>Initial release. French auction house for Sku:
+      <ul>
+        <li><strong>Localized sort order</strong> labels for the auction list.</li>
+        <li><strong>Free Gold/Silver/Copper price editor</strong> when posting an auction.</li>
+        <li><strong>Instant bag scan</strong> for "New auction" (list sellable items from your bags).</li>
+        <li><strong>Strategy buy</strong> with free input (item name that works with French names, max Gold/Silver/Copper, quantity).</li>
+        <li><strong>Fast full scan</strong> (400 rows/frame) and an optional <strong>auto full scan on open</strong> toggle.</li>
+        <li><strong>Enriched item tooltips</strong>: third-party addon lines (Pawn, DisenchantBuddy, BitesCookBook, KeepTheHerbs…), equipped-item comparison, reagent/crafting prices paired with Sku's scanned auction data, and disenchant materials.</li>
+        <li><strong>Close cleanup</strong>: keeps the auction house and the Sku menu in sync on close and reliably frees the Enter/Escape bindings afterwards.</li>
+      </ul>
+    </li>
+  </ul>
+</section>
+
+<!-- ============================ DEUTSCH ============================ -->
+<section class="lang" data-lang="de" hidden>
+  <h2>Deutsch</h2>
+
+  <h3>[2.3.1] — 2026-07-12</h3>
+  <h4>Behoben</h4>
+  <ul>
+    <li><strong>Die Auswahl eines übersetzten Gegenstands in "Auktionen nach Gegenstand" lieferte 0 Ergebnisse.</strong> Skus native Eintrags-Aktion fragt den Server mit dem beim Listenaufbau erfassten Namen ab — dem englischen — als exakte Übereinstimmung, was auf einem französischen Realm nichts findet. <code>AuctionHouseStartQuery</code> wird nun gehookt: Ist der Suchtext ein bekannter englischer Gegenstandsname aus diesen Listen, wird er vor dem Senden durch den geladenen französischen Namen ersetzt. Freitextsuche, Strategiekauf und Vollscans bleiben unberührt. Nur französische Clients.</li>
+  </ul>
+
+  <h3>[2.3.0] — 2026-07-11</h3>
+  <h4>Behoben</h4>
+  <ul>
+    <li><strong>Menü aktualisiert sich nach dem Einstellen einer Auktion nicht.</strong> Nach dem Einstellen blieben die Taschenliste unter "Neue Auktion" und die "Verkäufe"-Liste eingefroren, bis das Auktionshaus geschlossen und wieder geöffnet wurde. Die Einstell-Aktion spiegelt jetzt Skus nativen Ablauf (<code>GetOwnerAuctionItems</code> + zurück + <code>CheckFrames</code>), sodass sich beide an Ort und Stelle aktualisieren.</li>
+    <li><strong>Englische Gegenstandsnamen in "Auktionen nach Gegenstand".</strong> Unter einer Kategorie (z. B. Behälter/Behälter) zeigten noch nicht zwischengespeicherte Gegenstände ihren englischen Namen. Ein neues Modul <code>ItemNames.lua</code> lauscht auf <code>GET_ITEM_INFO_RECEIVED</code> und beschriftet diese Einträge beim Laden an Ort und Stelle mit dem lokalisierten Namen um, ohne die Liste neu zu bauen (der Cursor bewegt sich nie). Nur französische Clients.</li>
+  </ul>
+
+  <h3>[2.2.0] — 2026-07-11</h3>
+  <h4>Hinzugefügt</h4>
+  <ul>
+    <li><strong>Deutsche Lokalisierung.</strong> <code>Locales/deDE.lua</code> hinzugefügt; das Addon ist nun vollständig auf Englisch, Deutsch und Französisch lokalisiert, mit einem Rückfall pro Schlüssel auf Englisch. (Sku liefert seine deutschen Texte nativ, daher braucht die deutsche Locale nur die eigenen UI-Texte des Addons.)</li>
+  </ul>
+
+  <h3>[2.1.0] — 2026-07-11</h3>
+  <h4>Behoben</h4>
+  <ul>
+    <li><strong>Sku-42-Kompatibilität.</strong> Alle <code>Auction*</code>-Funktionen wurden vom <code>SkuCore</code>-Objekt auf das neue Submodul <code>SkuCore.AuctionHouse</code> verschoben; jeder Hook und Aufruf umgestellt (mit automatischem Rückfall auf <code>SkuCore</code> für Sku 41). Der aktuelle Filter / der Zeitstempel des letzten Vollscans laufen nun über <code>SkuSettings:Sub("SkuCore", nil, "char")</code> statt des entfernten <code>SkuOptions.db.char</code>. Das Tooltip-Unescaping wanderte von <code>SkuChat:Unescape</code> zu <code>SkuUtil:Unescape</code> (mit Rückfall).</li>
+  </ul>
+
+  <h3>[2.0.0]</h3>
+  <h4>Hinzugefügt</h4>
+  <ul>
+    <li>Erstveröffentlichung. Französisches Auktionshaus für Sku:
+      <ul>
+        <li><strong>Lokalisierte Sortierreihenfolge</strong> für die Auktionsliste.</li>
+        <li><strong>Freier Gold/Silber/Kupfer-Preiseditor</strong> beim Einstellen einer Auktion.</li>
+        <li><strong>Sofort-Taschenscan</strong> für "Neue Auktion" (verkaufbare Gegenstände aus deinen Taschen auflisten).</li>
+        <li><strong>Strategiekauf</strong> mit freier Eingabe (Gegenstandsname, der mit fremdsprachigen Namen funktioniert, maximaler Gold/Silber/Kupfer-Preis, Menge).</li>
+        <li><strong>Schneller Vollscan</strong> (400 Zeilen/Frame) und ein optionaler Schalter <strong>automatischer Vollscan beim Öffnen</strong>.</li>
+        <li><strong>Angereicherte Gegenstands-Tooltips</strong>: Zeilen von Fremd-Addons (Pawn, DisenchantBuddy, BitesCookBook, KeepTheHerbs…), Vergleich mit dem angelegten Gegenstand, Reagenzien-/Herstellungspreise gepaart mit Skus gescannten Auktionsdaten und Entzauber-Materialien.</li>
+        <li><strong>Aufräumen beim Schließen</strong>: hält Auktionshaus und Sku-Menü beim Schließen synchron und gibt danach zuverlässig die Eingabe-/Escape-Bindungen frei.</li>
+      </ul>
+    </li>
+  </ul>
+</section>
+</main>
+
+<footer>SkuAuctionHouseReplacement · Auteur : Naxedim · Dépendance : Sku · <a href="README.html">Lisez-moi</a></footer>
+</div>
+
+<script>
+(function(){
+  var btns=[].slice.call(document.querySelectorAll('.langnav button'));
+  var secs=[].slice.call(document.querySelectorAll('section.lang'));
+  function show(l){
+    secs.forEach(function(s){s.hidden=s.getAttribute('data-lang')!==l;});
+    btns.forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang')===l);});
+    document.documentElement.lang=l;
+  }
+  btns.forEach(function(b){b.addEventListener('click',function(){show(b.getAttribute('data-lang'));});});
+})();
+</script>
+</body>
+</html>

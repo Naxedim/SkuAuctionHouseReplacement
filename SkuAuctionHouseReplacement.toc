@@ -1,0 +1,27 @@
+﻿## Interface: 20506
+## Title: SkuAuctionHouseReplacement
+## Notes: Traduction, optimisation et amélioration de l'hotel des ventes pour Sku en Francais.
+## Author: Naxedim
+## Version: 2.3.1
+## Dependencies: Sku
+## OptionalDeps: BitesCookBook, DisenchantBuddy, KeepTheHerbs
+## SavedVariablesPerCharacter: SkuAHReplacementDB
+
+# Localisation (ajouter ici un nouveau fichier Locales\<locale>.lua pour une autre langue)
+Locales\enUS.lua
+Locales\frFR.lua
+Locales\deDE.lua
+
+# Noyau (localisation, initialisation, variables sauvegardées, helpers partagés)
+Core.lua
+Compat.lua
+
+# Modules fonctionnels
+FullScan.lua
+SellMenu.lua
+SortLabels.lua
+StratBuy.lua
+Reagents.lua
+Tooltip.lua
+ItemNames.lua
+CloseCleanup.lua

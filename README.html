@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SkuAuctionHouseReplacement — Lisez-moi</title>
+<style>
+:root{
+  --bg:#f7f4ee;--fg:#272013;--muted:#6f6552;--border:#e3dccc;
+  --accent:#b06a1c;--accent2:#8a5214;--code-bg:#efe8da;--code-fg:#8a4a00;
+  --quote-bg:#fbf2df;--quote-br:#d9a441;--card:#fffdf8;
+}
+@media (prefers-color-scheme:dark){
+:root{
+  --bg:#191712;--fg:#e9e2d3;--muted:#a99f8b;--border:#38322a;
+  --accent:#e0954a;--accent2:#f1bd7e;--code-bg:#2a2620;--code-fg:#f1bd7e;
+  --quote-bg:#241f16;--quote-br:#8a6a2a;--card:#221e17;
+}
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+  line-height:1.65;font-size:16px}
+.wrap{max-width:840px;margin:0 auto;padding:2rem 1.25rem 4rem}
+header{border-bottom:2px solid var(--border);padding-bottom:1rem;margin-bottom:1.5rem}
+h1{font-size:1.9rem;margin:.2rem 0;color:var(--accent2)}
+.sub{color:var(--muted);margin:.2rem 0 1rem}
+.langnav{position:sticky;top:0;z-index:5;display:flex;gap:.4rem;flex-wrap:wrap;
+  background:var(--bg);padding:.6rem 0;margin:0 0 1rem}
+.langnav button{cursor:pointer;border:1px solid var(--border);background:var(--card);
+  color:var(--fg);font:inherit;font-size:.92rem;padding:.4rem .9rem;border-radius:999px}
+.langnav button.active{background:var(--accent);border-color:var(--accent);color:#fff}
+section.lang{animation:fade .2s ease}
+@keyframes fade{from{opacity:.3}to{opacity:1}}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);
+  border-bottom:1px solid var(--border);padding-bottom:.3rem;margin:2rem 0 1rem}
+h3{font-size:1.35rem;margin:1.8rem 0 .4rem;color:var(--accent2)}
+h4{font-size:1.05rem;margin:1.1rem 0 .3rem;color:var(--fg)}
+ul{margin:.3rem 0 .8rem;padding-left:1.3rem}
+li{margin:.35rem 0}
+p{margin:.5rem 0}
+code{background:var(--code-bg);color:var(--code-fg);padding:.1rem .35rem;
+  border-radius:4px;font-family:"Cascadia Code",Consolas,Menlo,monospace;font-size:.87em}
+strong{color:var(--fg)}
+footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--border);
+  color:var(--muted);font-size:.85rem}
+a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>SkuAuctionHouseReplacement</h1>
+  <p class="sub">Module complémentaire pour <strong>Sku</strong> (WoW: The Burning Crusade Classic — Anniversary, Interface 20506) qui traduit, accélère et enrichit l'hôtel des ventes pour les utilisateurs de lecteur d'écran / TTS.</p>
+  <nav class="langnav" aria-label="Langue">
+    <button data-lang="fr" class="active">Français</button>
+    <button data-lang="en">English</button>
+    <button data-lang="de">Deutsch</button>
+  </nav>
+</header>
+
+<main>
+<!-- ============================ FRANÇAIS ============================ -->
+<section class="lang" data-lang="fr">
+  <h2>Français</h2>
+
+  <h3>Fonctionnalités</h3>
+  <ul>
+    <li><strong>Ordre de tri localisé</strong> — le menu de tri de la liste des enchères (« Achat immédiat par objet », « Offre par lot », « Niveau croissant »…) se lit dans votre langue et est remappé sur l'index de tri de Sku.</li>
+    <li><strong>Éditeur de prix libre à la vente</strong> — mettez en vente en tapant le prix dans des cases séparées <strong>Or / Argent / Cuivre</strong> (ENTREE pour taper, ENTREE pour valider), pré-rempli depuis l'historique de prix scanné par Sku. Choisissez ensuite le nombre d'enchères et la durée.</li>
+    <li><strong>Scan instantané des sacs pour « Nouvelle enchère »</strong> — liste directement les objets vendables de vos sacs, chacun avec une infobulle enrichie et un flux taille de lot / quantité.</li>
+    <li><strong>Achat stratégique</strong> — achetez une quantité donnée d'un objet jusqu'à un prix unitaire maximum, avec <strong>saisie libre</strong> du nom de l'objet (fonctionne avec les noms localisés, ce que la liste native ne permettait pas) et du prix maximum Or/Argent/Cuivre.</li>
+    <li><strong>Scan complet rapide</strong> — ingère le résultat getAll du serveur à 400 lignes par frame avec progression vocalisée, plus une bascule optionnelle par personnage <strong>« scan complet automatique à l'ouverture »</strong> dans le menu de l'hôtel des ventes.</li>
+    <li><strong>Infobulles d'objet enrichies</strong> — capture les lignes d'addons tiers (Pawn, DisenchantBuddy, BitesCookBook, KeepTheHerbs…), ajoute une <strong>comparaison avec l'objet équipé</strong> pour l'équipement, et ajoute les <strong>prix des ingrédients / d'artisanat</strong> couplés aux données d'enchères scannées par Sku ainsi que les matériaux de désenchantement — le tout vocalisé via l'infobulle de Sku.</li>
+    <li><strong>Nettoyage à la fermeture</strong> — garde l'hôtel des ventes et le menu Sku synchronisés quand l'un se ferme, et libère ensuite de façon fiable les touches Entrée/Échap (corrige les touches bloquées après une fermeture par Échap).</li>
+    <li><strong>Noms d'objets localisés</strong> dans « enchères par objet » sur les clients non natifs.</li>
+  </ul>
+
+  <h3>Prérequis</h3>
+  <ul>
+    <li><strong>Sku</strong> (dépendance forte, chargée automatiquement).</li>
+    <li>Optionnel : <strong>BitesCookBook</strong>, <strong>DisenchantBuddy</strong>, <strong>KeepTheHerbs</strong> — si présents, leurs données sont intégrées à l'infobulle enrichie.</li>
+    <li>Une configuration TTS / voix de Sku fonctionnelle.</li>
+  </ul>
+
+  <h3>Installation</h3>
+  <p>Copier le dossier <code>SkuAuctionHouseReplacement</code> dans <code>Interface\AddOns\</code>. Se localise automatiquement en anglais, allemand ou français. Enregistre un réglage par personnage (<code>SkuAHReplacementDB</code> : la bascule de scan automatique).</p>
+
+  <h3>Structure des fichiers</h3>
+  <ul>
+    <li><code>Core.lua</code> — socle (locales, <code>ns.T</code>/<code>ns.L</code>, <code>ns.onReady</code>, SavedVariables, métatable de noms d'objets localisés).</li>
+    <li><code>Compat.lua</code> — helpers bas niveau partagés (wrappers de l'API des conteneurs, calcul de pièces, test de liaison, mise en scène de la vente, capture du résultat, infobulle de scan dédiée).</li>
+    <li><code>FullScan.lua</code> — ingestion getAll accélérée + scan auto à l'ouverture + bascule de menu.</li>
+    <li><code>SellMenu.lua</code> — éditeur de prix + scan instantané des sacs pour la vente.</li>
+    <li><code>SortLabels.lua</code> — ordre de tri localisé.</li>
+    <li><code>StratBuy.lua</code> — achat stratégique avec saisie libre.</li>
+    <li><code>Reagents.lua</code> — infos de prix ingrédients / artisanat / désenchantement.</li>
+    <li><code>Tooltip.lua</code> — infobulle d'objet enrichie.</li>
+    <li><code>ItemNames.lua</code> — localise les noms d'objets dans « enchères par objet » au fur et à mesure de leur chargement (clients français).</li>
+    <li><code>CloseCleanup.lua</code> — synchronisation à la fermeture + nettoyage des touches.</li>
+    <li><code>Locales\enUS.lua</code>, <code>Locales\frFR.lua</code>, <code>Locales\deDE.lua</code> — chaînes de l'addon.</li>
+  </ul>
+</section>
+
+<!-- ============================ ENGLISH ============================ -->
+<section class="lang" data-lang="en" hidden>
+  <h2>English</h2>
+
+  <h3>Features</h3>
+  <ul>
+    <li><strong>Localized sort order</strong> — the auction list sort menu ("Buyout per item", "Bid per stack", "Level ascending"…) reads in your language and maps back to Sku's sort index.</li>
+    <li><strong>Free price editor when selling</strong> — post an auction by typing the price in separate <strong>Gold / Silver / Copper</strong> boxes (ENTER to type, ENTER to confirm), pre-filled from Sku's scanned price history. Then pick the number of auctions and the duration.</li>
+    <li><strong>Instant bag scan for "New auction"</strong> — lists the sellable items from your bags directly, each with an enriched tooltip and a stack-size / count flow.</li>
+    <li><strong>Strategy buy</strong> — buy a set quantity of an item up to a maximum unit price, with <strong>free text input</strong> for the item name (works with localized names, which the native list could not) and for the max Gold/Silver/Copper.</li>
+    <li><strong>Fast full scan</strong> — ingests the server's getAll result at 400 rows per frame with spoken progress, plus an optional per-character <strong>"auto full scan on open"</strong> toggle in the auction-house menu.</li>
+    <li><strong>Enriched item tooltips</strong> — captures lines from third-party addons (Pawn, DisenchantBuddy, BitesCookBook, KeepTheHerbs…), adds an <strong>equipped-item comparison</strong> for gear, and appends <strong>reagent / crafting prices</strong> paired with Sku's own scanned auction data plus disenchant materials — all spoken through Sku's tooltip.</li>
+    <li><strong>Close cleanup</strong> — keeps the auction house and the Sku menu in sync when either closes, and reliably frees the Enter/Escape override bindings afterwards (fixes stuck keys after closing with Escape).</li>
+    <li><strong>Localized item names</strong> in "auctions by item" on non-native clients.</li>
+  </ul>
+
+  <h3>Requirements</h3>
+  <ul>
+    <li><strong>Sku</strong> (hard dependency, loaded automatically).</li>
+    <li>Optional: <strong>BitesCookBook</strong>, <strong>DisenchantBuddy</strong>, <strong>KeepTheHerbs</strong> — if present, their data is folded into the enriched tooltip.</li>
+    <li>A working Sku TTS / voice setup.</li>
+  </ul>
+
+  <h3>Installation</h3>
+  <p>Copy the <code>SkuAuctionHouseReplacement</code> folder into <code>Interface\AddOns\</code>. Localizes itself to English, German or French automatically. Saves one per-character setting (<code>SkuAHReplacementDB</code>: the auto-scan toggle).</p>
+
+  <h3>File structure</h3>
+  <ul>
+    <li><code>Core.lua</code> — bootstrap (locales, <code>ns.T</code>/<code>ns.L</code>, <code>ns.onReady</code>, SavedVariables, localized item-name metatable).</li>
+    <li><code>Compat.lua</code> — shared low-level helpers (container API wrappers, coin math, soulbound check, sell staging, result capture, a dedicated scan tooltip).</li>
+    <li><code>FullScan.lua</code> — faster getAll ingest + auto-scan on open + menu toggle.</li>
+    <li><code>SellMenu.lua</code> — price editor + instant bag sell scan.</li>
+    <li><code>SortLabels.lua</code> — localized sort order.</li>
+    <li><code>StratBuy.lua</code> — strategy buy with free input.</li>
+    <li><code>Reagents.lua</code> — reagent / crafting / disenchant price info.</li>
+    <li><code>Tooltip.lua</code> — enriched item tooltip.</li>
+    <li><code>ItemNames.lua</code> — localizes item names in "auctions by item" as they load (French clients).</li>
+    <li><code>CloseCleanup.lua</code> — close sync + binding cleanup.</li>
+    <li><code>Locales\enUS.lua</code>, <code>Locales\frFR.lua</code>, <code>Locales\deDE.lua</code> — addon strings.</li>
+  </ul>
+</section>
+
+<!-- ============================ DEUTSCH ============================ -->
+<section class="lang" data-lang="de" hidden>
+  <h2>Deutsch</h2>
+
+  <h3>Funktionen</h3>
+  <ul>
+    <li><strong>Lokalisierte Sortierreihenfolge</strong> — das Sortiermenü der Auktionsliste ("Sofortkauf pro Gegenstand", "Gebot pro Stapel", "Stufe aufsteigend"…) liest in deiner Sprache und wird auf Skus Sortierindex zurückgemappt.</li>
+    <li><strong>Freier Preiseditor beim Verkaufen</strong> — stelle eine Auktion ein, indem du den Preis in getrennte <strong>Gold / Silber / Kupfer</strong>-Felder tippst (EINGABE zum Tippen, EINGABE zum Bestätigen), vorbelegt aus Skus gescanntem Preisverlauf. Danach Anzahl der Auktionen und Laufzeit wählen.</li>
+    <li><strong>Sofort-Taschenscan für "Neue Auktion"</strong> — listet die verkaufbaren Gegenstände aus deinen Taschen direkt auf, jeweils mit angereichertem Tooltip und einem Stapelgröße-/Anzahl-Ablauf.</li>
+    <li><strong>Strategiekauf</strong> — kaufe eine festgelegte Menge eines Gegenstands bis zu einem maximalen Stückpreis, mit <strong>freier Texteingabe</strong> für den Gegenstandsnamen (funktioniert mit lokalisierten Namen, was die native Liste nicht konnte) und für den maximalen Gold/Silber/Kupfer-Preis.</li>
+    <li><strong>Schneller Vollscan</strong> — verarbeitet das getAll-Ergebnis des Servers mit 400 Zeilen pro Frame und gesprochenem Fortschritt, plus ein optionaler charakterweiser Schalter <strong>"automatischer Vollscan beim Öffnen"</strong> im Auktionshaus-Menü.</li>
+    <li><strong>Angereicherte Gegenstands-Tooltips</strong> — erfasst Zeilen von Fremd-Addons (Pawn, DisenchantBuddy, BitesCookBook, KeepTheHerbs…), fügt einen <strong>Vergleich mit dem angelegten Gegenstand</strong> hinzu und hängt <strong>Reagenzien-/Herstellungspreise</strong> an, gepaart mit Skus eigenen gescannten Auktionsdaten sowie Entzauber-Materialien — alles über Skus Tooltip gesprochen.</li>
+    <li><strong>Aufräumen beim Schließen</strong> — hält Auktionshaus und Sku-Menü synchron, wenn eines schließt, und gibt danach zuverlässig die Eingabe-/Escape-Override-Bindungen frei (behebt hängende Tasten nach dem Schließen mit Escape).</li>
+    <li><strong>Lokalisierte Gegenstandsnamen</strong> in "Auktionen nach Gegenstand" auf nicht-nativen Clients.</li>
+  </ul>
+
+  <h3>Voraussetzungen</h3>
+  <ul>
+    <li><strong>Sku</strong> (harte Abhängigkeit, wird automatisch geladen).</li>
+    <li>Optional: <strong>BitesCookBook</strong>, <strong>DisenchantBuddy</strong>, <strong>KeepTheHerbs</strong> — falls vorhanden, werden ihre Daten in den angereicherten Tooltip eingebunden.</li>
+    <li>Eine funktionierende Sku-TTS-/Sprachausgabe.</li>
+  </ul>
+
+  <h3>Installation</h3>
+  <p>Den Ordner <code>SkuAuctionHouseReplacement</code> nach <code>Interface\AddOns\</code> kopieren. Lokalisiert sich automatisch auf Englisch, Deutsch oder Französisch. Speichert eine charakterweise Einstellung (<code>SkuAHReplacementDB</code>: der Auto-Scan-Schalter).</p>
+
+  <h3>Dateistruktur</h3>
+  <ul>
+    <li><code>Core.lua</code> — Bootstrap (Locales, <code>ns.T</code>/<code>ns.L</code>, <code>ns.onReady</code>, SavedVariables, Metatable für lokalisierte Gegenstandsnamen).</li>
+    <li><code>Compat.lua</code> — gemeinsame Low-Level-Helfer (Container-API-Wrapper, Münz-Mathematik, Seelenbindungsprüfung, Verkaufs-Staging, Ergebniserfassung, eigener Scan-Tooltip).</li>
+    <li><code>FullScan.lua</code> — schnellerer getAll-Ingest + Auto-Scan beim Öffnen + Menü-Schalter.</li>
+    <li><code>SellMenu.lua</code> — Preiseditor + Sofort-Taschen-Verkaufsscan.</li>
+    <li><code>SortLabels.lua</code> — lokalisierte Sortierreihenfolge.</li>
+    <li><code>StratBuy.lua</code> — Strategiekauf mit freier Eingabe.</li>
+    <li><code>Reagents.lua</code> — Reagenzien-/Herstellungs-/Entzauber-Preisinfo.</li>
+    <li><code>Tooltip.lua</code> — angereicherter Gegenstands-Tooltip.</li>
+    <li><code>ItemNames.lua</code> — lokalisiert Gegenstandsnamen in "Auktionen nach Gegenstand" beim Laden (französische Clients).</li>
+    <li><code>CloseCleanup.lua</code> — Schließen-Synchronisierung + Bindungs-Aufräumen.</li>
+    <li><code>Locales\enUS.lua</code>, <code>Locales\frFR.lua</code>, <code>Locales\deDE.lua</code> — Addon-Texte.</li>
+  </ul>
+</section>
+</main>
+
+<footer>SkuAuctionHouseReplacement · Auteur : Naxedim · Dépendance : Sku · <a href="CHANGELOG.html">Changelog</a></footer>
+</div>
+
+<script>
+(function(){
+  var btns=[].slice.call(document.querySelectorAll('.langnav button'));
+  var secs=[].slice.call(document.querySelectorAll('section.lang'));
+  function show(l){
+    secs.forEach(function(s){s.hidden=s.getAttribute('data-lang')!==l;});
+    btns.forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang')===l);});
+    document.documentElement.lang=l;
+  }
+  btns.forEach(function(b){b.addEventListener('click',function(){show(b.getAttribute('data-lang'));});});
+})();
+</script>
+</body>
+</html>
