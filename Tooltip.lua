@@ -9,6 +9,53 @@
 
 local addonName, ns = ...
 
+-- Chaîne de qualité localisée (« Épique », « Rare », …) pour un objet, dans le
+-- format utilisé par les info-bulles natives de Sku : appondue au nom de l'objet
+-- sous la forme « Nom (Qualité) ». Respecte le réglage Sku ShowItemQality
+-- (activé par défaut) pour que l'affichage reste cohérent avec le reste de Sku.
+local function GetItemQualityString(aItemData)
+    -- Réglage Sku : ne rien afficher si l'utilisateur a désactivé la qualité.
+    local ok, sub = pcall(function() return SkuSettings and SkuSettings:Sub("SkuCore") end)
+    if not ok or not sub or not sub.itemSettings or sub.itemSettings.ShowItemQality ~= true then
+        return nil
+    end
+
+    -- Indice de qualité : d'abord la donnée d'enchère (champ 4), sinon résolution
+    -- via le lien / l'ID de l'objet.
+    local quality = aItemData[4]
+    if quality == nil then
+        local link = aItemData[21]
+        if link then
+            quality = select(3, GetItemInfo(link))
+        end
+    end
+    if quality == nil and aItemData[17] then
+        quality = select(3, GetItemInfo(aItemData[17]))
+        if quality == nil and C_Item and C_Item.GetItemQualityByID then
+            quality = C_Item.GetItemQualityByID(aItemData[17])
+        end
+    end
+    if quality == nil then
+        return nil
+    end
+
+    return _G["ITEM_QUALITY" .. quality .. "_DESC"]
+end
+
+-- Appond « (Qualité) » à la fin de la première ligne (le nom de l'objet) du texte
+-- d'info-bulle, comme le font les info-bulles natives de Sku.
+local function AppendQualityToFirstLine(aText, aQualityString)
+    if not aQualityString or aText == "" then
+        return aText
+    end
+    local lineEnd = string.find(aText, "\r\n", 1, true)
+    if lineEnd then
+        local firstLine = string.sub(aText, 1, lineEnd - 1)
+        return firstLine .. " (" .. aQualityString .. ")" .. string.sub(aText, lineEnd)
+    end
+    return aText .. " (" .. aQualityString .. ")"
+end
+
 local function InstallTooltipHook()
     -- Sku 42 : les fonctions Auction* vivent sur le sous-module
     -- SkuCore.AuctionHouse (handle publié) ; sur Sku 41 elles étaient sur
@@ -188,6 +235,10 @@ local function InstallTooltipHook()
                     fullText = fullText .. "\r\n\r\n" .. disenchantText
                 end
             end
+
+            -- Qualité de l'objet appondue au nom (« Nom (Épique) »), comme dans
+            -- les info-bulles natives de Sku.
+            fullText = AppendQualityToFirstLine(fullText, GetItemQualityString(aItemData))
 
             -- Sku 42 : Unescape a déménagé de SkuChat vers SkuUtil
             if SkuUtil and SkuUtil.Unescape then
