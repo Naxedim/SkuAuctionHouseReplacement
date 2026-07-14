@@ -2,7 +2,7 @@
 ## Title: SkuAuctionHouseReplacement
 ## Notes: Traduction, optimisation et amélioration de l'hotel des ventes pour Sku en Francais.
 ## Author: Naxedim
-## Version: 2.4.0
+## Version: 2.4.1
 ## Dependencies: Sku
 ## OptionalDeps: BitesCookBook, DisenchantBuddy, KeepTheHerbs
 ## SavedVariablesPerCharacter: SkuAHReplacementDB

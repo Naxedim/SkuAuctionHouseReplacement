@@ -66,6 +66,12 @@ a{color:var(--accent)}
 <section class="lang" data-lang="fr">
   <h2>Français</h2>
 
+  <h3>[2.4.1] — 2026-07-14</h3>
+  <h4>Corrigé</h4>
+  <ul>
+    <li><strong>Infobulle incomplète dans le flux « Nouvelle enchère ».</strong> En mode vente, en parcourant les sacs pour mettre un objet aux enchères, l'infobulle n'affichait que la comparaison avec l'équipement porté : il manquait les statistiques détaillées de l'objet et les lignes des autres addons (Pawn, TSM…). L'infobulle du vendeur ne recevait que l'ID de l'objet (<code>[17]</code>) et non son lien complet, si bien que Sku la construisait à partir de l'objet de base (sans suffixe ni enchantement aléatoire). Le lien complet issu du sac (<code>[21]</code>) est désormais transmis, rendant l'infobulle aussi complète que côté achat.</li>
+  </ul>
+
   <h3>[2.4.0] — 2026-07-13</h3>
   <h4>Ajouté</h4>
   <ul>
@@ -118,6 +124,12 @@ a{color:var(--accent)}
 <section class="lang" data-lang="en" hidden>
   <h2>English</h2>
 
+  <h3>[2.4.1] — 2026-07-14</h3>
+  <h4>Fixed</h4>
+  <ul>
+    <li><strong>Incomplete tooltip in the "New auction" flow.</strong> On the sell side, when browsing your bags to list an item, the tooltip only showed the comparison with your equipped gear — the item's detailed stats and other addons' lines (Pawn, TSM…) were missing. The seller tooltip was built from the item ID (<code>[17]</code>) only, without the full item link, so Sku rendered it from the base item (no random suffix or enchant). The full bag item link (<code>[21]</code>) is now passed through, making the seller tooltip as complete as the buy side.</li>
+  </ul>
+
   <h3>[2.4.0] — 2026-07-13</h3>
   <h4>Added</h4>
   <ul>
@@ -169,6 +181,12 @@ a{color:var(--accent)}
 <!-- ============================ DEUTSCH ============================ -->
 <section class="lang" data-lang="de" hidden>
   <h2>Deutsch</h2>
+
+  <h3>[2.4.1] — 2026-07-14</h3>
+  <h4>Behoben</h4>
+  <ul>
+    <li><strong>Unvollständiger Tooltip im Ablauf „Neue Auktion".</strong> Beim Verkaufen zeigte der Tooltip beim Durchsuchen der Taschen nur den Vergleich mit der getragenen Ausrüstung — die detaillierten Werte des Gegenstands und die Zeilen anderer Addons (Pawn, TSM…) fehlten. Der Verkäufer-Tooltip erhielt nur die Gegenstands-ID (<code>[17]</code>) ohne den vollständigen Gegenstandslink, sodass Sku ihn aus dem Basisgegenstand (ohne zufälligen Zusatz oder Verzauberung) aufbaute. Der vollständige Taschen-Link (<code>[21]</code>) wird nun mitgegeben, sodass der Verkäufer-Tooltip so vollständig ist wie auf der Kaufseite.</li>
+  </ul>
 
   <h3>[2.4.0] — 2026-07-13</h3>
   <h4>Hinzugefügt</h4>

@@ -221,7 +221,15 @@ local function InstallBagSellScan()
                                                             tNewMenuSubSubEntry.amountMax = tCountItems[itemID]
 
                                                             local aGossipItemTable = {
-                                                                textFull = select(2, tAH:AuctionBuildItemTooltip({[17] = itemID}, nil, true, true)),
+                                                                -- [21] = lien complet de l'objet (pas seulement l'ID) :
+                                                                -- indispensable pour que l'info-bulle du vendeur soit aussi
+                                                                -- complète que côté achat. Avec seulement [17]=itemID, Sku
+                                                                -- construit l'info-bulle via SetItemByID (objet de base, sans
+                                                                -- suffixe/enchant aléatoire) et notre hook via
+                                                                -- GameTooltip:SetHyperlink("item:"..id) — d'où l'absence des
+                                                                -- statistiques détaillées et des lignes des autres addons.
+                                                                -- Le lien complet (issu du sac) rétablit tout ce contexte.
+                                                                textFull = select(2, tAH:AuctionBuildItemTooltip({[17] = itemID, [21] = itemLink}, nil, true, true)),
                                                                 itemId = itemID,
                                                                 bag = bag, slot = slot,
                                                                 containerFrameName = "ContainerFrame"..(bag + 1).."Item"..(ns.GetContainerNumSlots(bag) - slot + 1),
